@@ -1,0 +1,23 @@
+apiVersion: apps/v1  # API version for Kubernetes Deployment
+kind: Deployment  # Defines a Deployment resource
+metadata:
+  name: my-deploy  # Name of the Deployment
+  labels:
+    app: my-deploy # Label to identify the Deployment
+spec:
+  replicas: 4  # Number of pod replicas to run
+  selector:
+    matchLabels:
+      app: webapp1  # Ensures Deployment manages pods with this label
+  strategy:
+    type: RollingUpdate  # Ensures a smooth update of pods without downtime
+  template:  # Pod template for the Deployment
+    metadata:
+      labels:
+        app: webapp1  # Must match `selector.matchLabels`
+    spec:
+      containers:
+      - name: webapp1  # Name of the container
+        image: rahulsid04/webapp1:latest  # ✅ Specify the Docker image
+        ports:
+          - containerPort: 7070  # Exposes port 7070 inside the container
